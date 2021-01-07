@@ -14,9 +14,10 @@ public class Nodo<T> {
     private String clave;
     private LinkedList<Arbol> children;
     
-    public Nodo(T content){
+    public Nodo(T content,String clav){
         this.valor=content;
         this.children=new LinkedList<>();
+        clave=clav;
     }
     
     public void setValor(T val){
@@ -34,7 +35,9 @@ public class Nodo<T> {
     public void setHijos(LinkedList<Arbol> hijos){
         children = hijos;
     }
-    
+    public int getCantHijos(){
+        return children.size();
+    }
     public LinkedList<Arbol> getHijos(){
         return children;
     }
