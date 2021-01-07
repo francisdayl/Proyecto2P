@@ -9,6 +9,41 @@ package ec.edu.espol.clases;
  *
  * @author F. Lopez
  */
-public class Nodo {
+public class Nodo<T> {
+    private T valor;
+    private String clave;
+    private LinkedList<Arbol> children;
+    
+    public Nodo(T content){
+        this.valor=content;
+        this.children=new LinkedList<>();
+    }
+    
+    public void setValor(T val){
+        valor=val;
+    }
+    public void setClave(String clav){
+        clave=clav;
+    }
+    public T getValor(){
+        return valor;
+    }
+    public String getClave(){
+        return clave;
+    }
+    public void setHijos(LinkedList<Arbol> hijos){
+        children = hijos;
+    }
+    
+    public LinkedList<Arbol> getHijos(){
+        return children;
+    }
+    
+    public void AddHijo(Arbol<T> hijo){
+        children.addLast(hijo);
+    }
+    
+    
+    
     
 }

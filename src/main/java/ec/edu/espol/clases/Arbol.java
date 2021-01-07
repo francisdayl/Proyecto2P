@@ -9,6 +9,22 @@ package ec.edu.espol.clases;
  *
  * @author F. Lopez
  */
-public class Arbol {
+public class Arbol<T> {
+    Nodo<T> root;
+    
+    public Arbol(Nodo<T> rootNode){
+        this.root=rootNode;
+    }
+    
+    public boolean isLeaf(){
+        return root.getHijos().size()==0;
+    }
+    
+    public void setRoot( Nodo<T> raiz){
+         root=raiz;
+    }
+    public void vaciarArbol(){
+        root=null;
+    }
     
 }
