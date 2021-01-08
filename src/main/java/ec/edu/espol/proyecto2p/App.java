@@ -1,5 +1,8 @@
 package ec.edu.espol.proyecto2p;
 
+import ec.edu.espol.clases.Arbol;
+import ec.edu.espol.soporte.FileManager;
+import java.io.File;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -32,7 +35,15 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
+        //test(); //solo es para probar codigo
         launch();
     }
-
+    
+    
+    private static void test(){
+        FileManager fm = new FileManager();
+        Arbol<Long,String> a = fm.getDirTree(new File("D:\\Anime"));
+        System.out.println(a.toStringClaveValor());
+        System.out.println(a.getRoot().getValor());
+    }
 }

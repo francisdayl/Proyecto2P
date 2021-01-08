@@ -9,12 +9,12 @@ package ec.edu.espol.clases;
  *
  * @author F. Lopez
  */
-public class Nodo<T> {
+public class Nodo<T,K> {
     private T valor;
-    private String clave;
+    private K clave;
     private LinkedList<Arbol> children;
     
-    public Nodo(T content,String clav){
+    public Nodo(T content,K clav){
         this.valor=content;
         this.children=new LinkedList<>();
         clave=clav;
@@ -23,13 +23,13 @@ public class Nodo<T> {
     public void setValor(T val){
         valor=val;
     }
-    public void setClave(String clav){
+    public void setClave(K clav){
         clave=clav;
     }
     public T getValor(){
         return valor;
     }
-    public String getClave(){
+    public K getClave(){
         return clave;
     }
     public void setHijos(LinkedList<Arbol> hijos){
@@ -42,7 +42,7 @@ public class Nodo<T> {
         return children;
     }
     
-    public void AddHijo(Arbol<T> hijo){
+    public void AddHijo(Arbol<T,K> hijo){
         children.addLast(hijo);
     }
     
