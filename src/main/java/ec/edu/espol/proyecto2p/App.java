@@ -10,6 +10,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 
 /**
  * JavaFX App
@@ -20,7 +22,11 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
+        //scene = new Scene(loadFXML("primary"), 640, 480);
+        Pane vista = new Pane();
+        Label lb = new Label("app javafx");
+        vista.getChildren().add(lb);
+        scene = new Scene(vista);
         stage.setScene(scene);
         stage.show();
     }
