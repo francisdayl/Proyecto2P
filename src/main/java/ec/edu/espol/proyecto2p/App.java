@@ -23,10 +23,10 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         //scene = new Scene(loadFXML("primary"), 640, 480);
-        Pane vista = new Pane();
+        VistaApp vista = new VistaApp();
         Label lb = new Label("app javafx");
-        vista.getChildren().add(lb);
-        scene = new Scene(vista);
+        
+        scene = new Scene(vista.getRoot());
         stage.setScene(scene);
         stage.show();
     }
