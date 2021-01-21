@@ -8,6 +8,7 @@ import java.util.Objects;
 
 
 
+
 public class LinkedList<E> implements List<E> {
     
     private Node<E> first;
@@ -99,6 +100,20 @@ public class LinkedList<E> implements List<E> {
         first=null;
         last=null;
         capacity=0;        
+    }
+    
+    public boolean add(E element){
+        Node <E> nn=new Node(element);
+        if(this.isEmpty()){
+            first=nn;
+            last=nn;
+        }
+        else{
+            last.setnext(nn);
+            last=nn;            
+        }       
+        capacity++;
+        return true;
     }
     
     public void add(int index, E element){/////
@@ -200,24 +215,7 @@ public class LinkedList<E> implements List<E> {
         return cad.substring(0,cad.length()-1).concat("]");      
     }// retorna una cadena de caracteres representando los elementos que la lista contiene*/
 
-    @Override
-    public Iterator<E> iterator() {
-        Iterator<E> it=new Iterator<E>() {            
-            Node<E> point=first;//puntero
-            //con valor inicial first
-            @Override
-            public boolean hasNext() {
-                return point!=null;
-            }
-            @Override
-            public E next() {
-                E valor=point.getcont();
-                point=point.getnext();
-                return valor;            
-            }            
-        };
-        return it;
-    }
+    
     
     public List<E> findAll(Comparator<E> cmp,E elem){
         List<E> results=new LinkedList<>();
@@ -243,5 +241,24 @@ public class LinkedList<E> implements List<E> {
             }
                 
                 }*/
+
+    @Override
+    public Iterator<E> iterator(){
+        Iterator<E> it= new Iterator<E>() {            
+            Node<E> point=first;//puntero
+            //con valor inicial first
+            @Override
+            public boolean hasNext() {
+                return point!=null;
+            }
+            @Override
+            public E next() {
+                E valor=point.getcont();
+                point=point.getnext();
+                return valor;            
+            }            
+        };
+        return it;
+    }
     
 }

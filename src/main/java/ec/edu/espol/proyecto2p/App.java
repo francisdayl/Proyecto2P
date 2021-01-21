@@ -2,6 +2,7 @@ package ec.edu.espol.proyecto2p;
 
 import ec.edu.espol.clases.Arbol;
 import ec.edu.espol.soporte.FileManager;
+import ec.edu.espol.soporte.Graphics;
 import java.io.File;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -23,10 +24,12 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         //scene = new Scene(loadFXML("primary"), 640, 480);
-        VistaApp vista = new VistaApp();
+        //VistaApp vista = new VistaApp();
         Label lb = new Label("app javafx");
         
-        scene = new Scene(vista.getRoot());
+        //scene = new Scene(vista.getRoot());
+        String url="C:\\Users\\ReynaldoPC\\Music\\Music";
+        scene = new Scene(new Graphics().generarRectangulos(new FileManager().getDirTree(new File(url))));
         stage.setScene(scene);
         stage.show();
     }
@@ -48,7 +51,7 @@ public class App extends Application {
     
     private static void test(){
         FileManager fm = new FileManager();
-        Arbol<Long,String> a = fm.getDirTree(new File("D:\\Anime"));
+        Arbol<Long,String> a = fm.getDirTree(new File("D:\\Personalizacion"));
         System.out.println(a.toStringClaveValor());
         System.out.println(a.getRoot().getValor());
     }

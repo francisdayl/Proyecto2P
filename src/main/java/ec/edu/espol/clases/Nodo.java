@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package ec.edu.espol.clases;
-
+import java.util.LinkedList;//borra esto al terminar
 /**
  *
  * @author F. Lopez
@@ -16,7 +16,7 @@ public class Nodo<T,K> {
     
     public Nodo(T content,K clav){
         this.valor=content;
-        this.children=new LinkedList<>();
+        this.children=new LinkedList();
         clave=clav;
     }
     
