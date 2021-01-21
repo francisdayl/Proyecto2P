@@ -16,21 +16,19 @@ import ec.edu.espol.clases.Arbol;
  */
 public class FileManager {
     
-    public Arbol<Long,String> getDirTree(File dir){
+    public Arbol<IndexFolder,String> getDirTree(File dir){
         //para usar este metodo previamente debes validar la ruta
         //el metodo se muere si se usa en carpetas que requieran ser administrador
-        Arbol<Long,String> t = new Arbol(dir.length(),dir.getName());
+        Arbol<IndexFolder,String> t = new Arbol(new IndexFolder(dir.length()),dir.getName());
         for(File f: dir.listFiles()){
             if(f.isFile()){
                 if(f!=null){
-                    long size = t.getValor()+f.length();
-                    t.setValor(size);
+                    t.getValor().contarArchivo(f);
                 }
             }
             if(f.isDirectory()){
-                Arbol<Long,String> subtree = this.getDirTree(f);
-                long size = t.getValor()+subtree.getValor();
-                t.setValor(size);
+                Arbol<IndexFolder,String> subtree = this.getDirTree(f);
+                t.getValor().sumarDirectorios(subtree.getValor());
                 t.AddHijo(subtree);
             } 
         }
