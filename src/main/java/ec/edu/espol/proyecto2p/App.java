@@ -21,20 +21,31 @@ import javafx.scene.layout.Pane;
 public class App extends Application {
 
     private static Scene scene;
+    private static Stage stageMain;
 
     @Override
     public void start(Stage stage) throws IOException {
         //scene = new Scene(loadFXML("primary"), 640, 480);
-        //VistaApp vista = new VistaApp();
+        stageMain = new Stage();
+        stage = stageMain;
+        VistaApp vista = new VistaApp();
         Label lb = new Label("app javafx");
-        
+        stage.setTitle(vista.titulo);
         //scene = new Scene(vista.getRoot());
-        String url="C:\\Users\\ReynaldoPC\\Downloads";
-        scene = new Scene(new Graphics().generarRectangulos(new FileManager().getDirTree(new File(url))));
-        stage.setScene(scene);
+        //String url="C:\\Users\\ReynaldoPC\\Downloads";
+        //scene = new Scene(new Graphics().generarRectangulos(new FileManager().getDirTree(new File(url))));
+        Scene scene2 = new Scene(vista.getRoot());
+        stage.setScene(scene2);
         stage.show();
     }
-
+    
+    public static void cambiarTitulo(String ttl){
+        stageMain.setTitle(ttl);
+    }
+    public Stage getStageMain() {
+        return stageMain;
+    }
+    
     static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
