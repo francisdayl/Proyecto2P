@@ -10,14 +10,17 @@ import ec.edu.espol.soporte.FileManager;
 import ec.edu.espol.soporte.Graphics;
 import ec.edu.espol.soporte.IndexFolder;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
@@ -27,6 +30,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.scene.SnapshotResult;
 
 /**
  *
@@ -46,26 +50,29 @@ public class VistaApp {
         
     }
     
+    //metodo el cual crea y maneja todos los componentes gráficos de la interfaz correspondientes al root
     public void crearTop(){
         HBox contenedor = new HBox();
         Button enviar = new Button("ESCOGER DIRECTORIO");
         Button capturar = new Button("GUARDAR IMAGEN");
-        capturar.setVisible(false);
+        capturar.setDisable(true);
         contenedor.setPadding(new Insets(5,5,5,5));
         contenedor.setAlignment(Pos.CENTER);
         contenedor.setSpacing(30);
-        contenedor.getChildren().addAll(enviar,capturar);
+        contenedor.getChildren().addAll(enviar);
         
         root.setTop(contenedor);
         
         enviar.setOnAction( (e)-> {
-            capturar.setVisible(true);
+            capturar.setDisable(false);
             DirectoryChooser directorios = new DirectoryChooser();
-            file = directorios.showDialog(new Stage());
-            System.out.println(file.getAbsolutePath());
-            Arbol<IndexFolder, String> tree = new FileManager().getDirTree(file);
+            file = directorios.showDialog(new Stage());//el usuario escoge directorio y se guarda en objeto file
+            //System.out.println(file.getAbsolutePath());
+            Arbol<IndexFolder, String> tree = new FileManager().getDirTree(file); //se obtiene el arbol a partir del directorio escogido
+            //configuracion de título del stage
             titulo = "Estoy en el directorio: "+file.getName()+" de tamaño: "+transformacion(tree.getValor().getSize());
             App.cambiarTitulo(titulo);
+            //se genera el pane con el treemap correspondiente y se lo agrega al root
             Pane treemap = new Graphics().generarRectangulos(tree);
             treemap.setMaxSize(new Graphics().getWIDTH(), new Graphics().getHEIGHT());
             root.setCenter(treemap);
@@ -74,29 +81,45 @@ public class VistaApp {
         
     }
     
-    /*public void capturarYGuardarDisplay(){
+    //método el cual tomará una captura de pantalla del root al ser llamado
+    public void capturarYGuardarDisplay(){
         FileChooser filechooser = new FileChooser();
         
-        filechooser.getExtensionFilters().add(new)
-    }*/
+        filechooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("png files (*.png)", "*.png"));
+        
+        File file = filechooser.showSaveDialog(null);
+
+    if(file != null){
+        
+            //Pad the capture area
+            WritableImage writableImage = root.snapshot(new SnapshotParameters(), null);
+            
+            //RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
+            //Write the snapshot to the chosen file
+            //ImageIO.write(renderedImage, "png", file);
+         
+    }
+    }
     
+    /*metodo que recibe un long que representa un tamaño de archivo en bytes y retorna su conversión correspondiente
+    a KB, MG, GB o TB*/
     public static String transformacion(Long bytes){
         
         if((bytes/1024) < 1024){
-            return String.valueOf(bytes)+" Bytes";
+            return String.valueOf(bytes/1024)+" KB";
         }
         else if((bytes/(1024*1024)) < 1024){
-            return String.valueOf((int)(bytes/1024))+" KB";
-        }
-        else if((bytes/(1024*1024*1024)) < 1024){
             return String.valueOf((int)(bytes/(1024*1024)))+" MB";
         }
-        else if((bytes/(1024*1024*1024*1024)) < 1024){
+        else if((bytes/(1024*1024*1024)) < 1024){
             return String.valueOf((int)(bytes/(1024*1024*1024)))+" GB";
         }
-        else if((bytes/(1024*1024*1024*1024*1024)) < 1024){
+        else if((bytes/(1024*1024*1024*1024)) < 1024){
             return String.valueOf((int)(bytes/(1024*1024*1024*1024)))+" TB";
         }
+        /*else if((bytes/(1024*1024*1024*1024*1024)) < 1024){
+            return String.valueOf((int)(bytes/(1024*1024*1024*1024)))+" TB";
+        }*/
         
         return String.valueOf(bytes)+" Bytes";
     }
@@ -105,4 +128,6 @@ public class VistaApp {
     public BorderPane getRoot(){
         return this.root;
     }
+
+    
 }

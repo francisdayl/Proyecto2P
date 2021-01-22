@@ -16,6 +16,7 @@ import ec.edu.espol.clases.Arbol;
  */
 public class FileManager {
     
+    //metodo que crea un arbol multicamino a partir de un directorio de archivos
     public Arbol<IndexFolder,String> getDirTree(File dir){
         //para usar este metodo previamente debes validar la ruta
         //el metodo se muere si se usa en carpetas que requieran ser administrador
@@ -35,6 +36,7 @@ public class FileManager {
         return t;
     }
     
+    //retorna el nombre de la carpeta correspondiente a la ruta enviada
     public String getFolderName(String route){
         System.out.println("Llegue aki");
         File f = new File(route);

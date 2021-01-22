@@ -29,7 +29,7 @@ public class App extends Application {
         stageMain = new Stage();
         stage = stageMain;
         VistaApp vista = new VistaApp();
-        Label lb = new Label("app javafx");
+       
         stage.setTitle(vista.titulo);
         //scene = new Scene(vista.getRoot());
         //String url="C:\\Users\\ReynaldoPC\\Downloads";

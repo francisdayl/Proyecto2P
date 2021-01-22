@@ -72,6 +72,8 @@ public class Graphics {
         
         if(isHbox){
             HBox pane = new HBox();
+            pane.setSpacing(2);
+            pane.setPadding(new Insets(1,1,1,1));
             pane.setBackground(this.getBacground(tree.getValor()));
             pane.setAlignment(pos);
             pane.setMinHeight(height);
@@ -111,6 +113,8 @@ public class Graphics {
             return pane;
         }else{
             VBox pane = new VBox();
+            pane.setSpacing(2);
+            pane.setPadding(new Insets(1,1,1,1));
             pane.setBackground(this.getBacground(tree.getValor()));
             pane.setAlignment(pos);
             pane.setMinHeight(height);
