@@ -7,6 +7,7 @@ package ec.edu.espol.soporte;
 
 import ec.edu.espol.clases.Arbol;
 import ec.edu.espol.clases.Nodo;
+import ec.edu.espol.proyecto2p.VistaApp;
 import java.util.LinkedList;
 import java.util.Map;
 import javafx.geometry.Insets;
@@ -32,8 +33,8 @@ import javafx.scene.paint.Color;
  * @author Claudio Olvera
  */
 public class Graphics {
-    int HEIGHT = 400;
-    int WIDTH = 600;
+    int HEIGHT = 600;
+    int WIDTH = 1280;
     boolean isHbox = true;
     int deepLvl = 3;
     Pos pos = Pos.TOP_LEFT;
@@ -47,6 +48,22 @@ public class Graphics {
     Color cnExcel=Color.rgb(85, 239, 196);
     Color cnDiapositivas=Color.rgb(249, 127, 81);
     Color cnOthers = Color.rgb(178, 190, 195);
+
+    public int getHEIGHT() {
+        return HEIGHT;
+    }
+
+    public void setHEIGHT(int HEIGHT) {
+        this.HEIGHT = HEIGHT;
+    }
+
+    public int getWIDTH() {
+        return WIDTH;
+    }
+
+    public void setWIDTH(int WIDTH) {
+        this.WIDTH = WIDTH;
+    }
     
     
     
@@ -79,7 +96,7 @@ public class Graphics {
                     spane.setMinWidth(nw);
                     spane.setAlignment(Pos.TOP_LEFT);
                     
-                    Label lb = new Label(t.getClave()+":\n"+t.getValor().getSize()+" Bytes");
+                    Label lb = new Label(t.getClave()+":\n"+VistaApp.transformacion(t.getValor().getSize()));
                     lb.setAlignment(Pos.TOP_LEFT);
                     spane.getChildren().add(b);
                     spane.getChildren().add(lb);
