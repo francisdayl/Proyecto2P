@@ -5,80 +5,104 @@
  */
 package ec.edu.espol.proyecto2p;
 
+import ec.edu.espol.clases.Arbol;
+import ec.edu.espol.soporte.FileManager;
+import ec.edu.espol.soporte.Graphics;
+import ec.edu.espol.soporte.IndexFolder;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 /**
  *
  * @author Natalia Ramirez
  */
 public class VistaApp {
-    private GridPane root;
-
+    private BorderPane root;
+    private File file;
+    public String titulo;
+    
     public VistaApp() {
-        this.root = new GridPane();
+        this.root = new BorderPane();
         root.setPadding(new Insets(10,10,10,10));
-        root.setVgap(5.0);
-        root.setHgap(5.0);
-        int[] valores = {200,400};
-        crearTreemap(valores);
+        root.setMaxSize(new Graphics().getWIDTH()+40, new Graphics().getHEIGHT()+120);
+        root.setMinSize(new Graphics().getWIDTH()+40, new Graphics().getHEIGHT()+120);
+        crearTop();
+        
     }
     
-    public void crearTreemap(int[] valores){
-        Map<Double, Double[]> map = new HashMap<>();
-        Double[] l1 = {50.0,20.0,84.0};
-        Double[] l2 = {50.0,78.0,84.0};
-        Double[] l3 = {45.0,84.0};
-        map.put(154.0, l1);
-        map.put(212.0, l2);
-        map.put(129.0, l3);
-        int cont = 0;
-        /*for(int valor : valores){
-            //root.getChildren().add(new Rectangle(valor,valor));
-            root.add(new Rectangle(Math.sqrt(valor),Math.sqrt(valor)), 0, cont);
-            cont++;
-        }*/
-        GridPane gp = new GridPane();
-        gp.setVgap(5.0);
-        gp.setHgap(5.0);
+    public void crearTop(){
+        HBox contenedor = new HBox();
+        Button enviar = new Button("ESCOGER DIRECTORIO");
+        Button capturar = new Button("GUARDAR IMAGEN");
+        capturar.setVisible(false);
+        contenedor.setPadding(new Insets(5,5,5,5));
+        contenedor.setAlignment(Pos.CENTER);
+        contenedor.setSpacing(30);
+        contenedor.getChildren().addAll(enviar,capturar);
         
-        for(Entry<Double,Double[]> entry : map.entrySet()){
-            gp.add(generateGridPane(entry,495.0), 0, cont);
-            cont++;
-        }
-        /*GridPane gp = new GridPane();
+        root.setTop(contenedor);
         
-        gp.setVgap(5.0);
-        gp.setHgap(5.0);
-        root.add(new Rectangle(70,100), 0, cont);
-        Rectangle r = new Rectangle();
-        double x =Math.round(((double)20/(double)30)*100);
-        System.out.println(x);
-        gp.add(new Rectangle(30, x-2.5), 0, 0);
-        gp.add(new Rectangle(30, Math.round(((double)10/(double)30)*100)-2.5), 0, 1);
-        //root.add(new Rectangle(30,100), cont+1, 0);
-        root.add(gp, cont+1, 0);*/
-        root.add(gp, 0, 0);
+        enviar.setOnAction( (e)-> {
+            capturar.setVisible(true);
+            DirectoryChooser directorios = new DirectoryChooser();
+            file = directorios.showDialog(new Stage());
+            System.out.println(file.getAbsolutePath());
+            Arbol<IndexFolder, String> tree = new FileManager().getDirTree(file);
+            titulo = "Estoy en el directorio: "+file.getName()+" de tamaño: "+transformacion(tree.getValor().getSize());
+            App.cambiarTitulo(titulo);
+            Pane treemap = new Graphics().generarRectangulos(tree);
+            treemap.setMaxSize(new Graphics().getWIDTH(), new Graphics().getHEIGHT());
+            root.setCenter(treemap);
+        });
+        
+        
     }
     
-    public GridPane generateGridPane(Entry<Double,Double[]> entry, Double h){
-        GridPane gp = new GridPane();
-        gp.setVgap(5.0);
-        gp.setHgap(5.0);
-        int cont = 0;
-        for(Double i : entry.getValue()){
-            gp.add(new Rectangle(entry.getKey(), Math.round(((i/entry.getKey())*h)-2.5)), cont, 0);
-            cont++;
+    /*public void capturarYGuardarDisplay(){
+        FileChooser filechooser = new FileChooser();
+        
+        filechooser.getExtensionFilters().add(new)
+    }*/
+    
+    public static String transformacion(Long bytes){
+        
+        if((bytes/1024) < 1024){
+            return String.valueOf(bytes)+" Bytes";
         }
-        return gp;
+        else if((bytes/(1024*1024)) < 1024){
+            return String.valueOf((int)(bytes/1024))+" KB";
+        }
+        else if((bytes/(1024*1024*1024)) < 1024){
+            return String.valueOf((int)(bytes/(1024*1024)))+" MB";
+        }
+        else if((bytes/(1024*1024*1024*1024)) < 1024){
+            return String.valueOf((int)(bytes/(1024*1024*1024)))+" GB";
+        }
+        else if((bytes/(1024*1024*1024*1024*1024)) < 1024){
+            return String.valueOf((int)(bytes/(1024*1024*1024*1024)))+" TB";
+        }
+        
+        return String.valueOf(bytes)+" Bytes";
     }
-    public GridPane getRoot(){
+    
+    
+    public BorderPane getRoot(){
         return this.root;
     }
 }
