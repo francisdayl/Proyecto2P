@@ -15,8 +15,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
+import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -31,6 +33,8 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.SnapshotResult;
+import javafx.scene.paint.Color;
+import javafx.stage.Screen;
 
 /**
  *
@@ -100,6 +104,28 @@ public class VistaApp {
          
     }
     }
+    
+    public static void capturar (Node node) {
+    try {
+        final Bounds bounds = node.getLayoutBounds();
+    
+        int imageWidth = (int) Math.round(bounds.getWidth() );
+        int imageHeight = (int) Math.round(bounds.getHeight() );
+        final SnapshotParameters snapPara = new SnapshotParameters();
+        snapPara.setFill(Color.TRANSPARENT);
+        snapPara.setTransform(javafx.scene.transform.Transform.scale(1, 1));
+        WritableImage snapshot = new WritableImage(imageWidth, imageHeight);
+        snapshot = node.snapshot(snapPara, snapshot);
+        
+        
+    } catch (Exception e) {
+        
+        
+    }
+
+    }
+    
+ 
     
     /*metodo que recibe un long que representa un tamaño de archivo en bytes y retorna su conversión correspondiente
     a KB, MG, GB o TB*/
