@@ -33,6 +33,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.SnapshotResult;
+import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 
@@ -48,8 +49,8 @@ public class VistaApp {
     public VistaApp() {
         this.root = new BorderPane();
         root.setPadding(new Insets(10,10,10,10));
-        root.setMaxSize(new Graphics().getWIDTH()+40, new Graphics().getHEIGHT()+120);
-        root.setMinSize(new Graphics().getWIDTH()+40, new Graphics().getHEIGHT()+120);
+        root.setMaxSize(new Graphics().getWIDTH()+40, new Graphics().getHEIGHT()+90);
+        root.setMinSize(new Graphics().getWIDTH()+40, new Graphics().getHEIGHT()+90);
         crearTop();
         
     }
@@ -63,7 +64,7 @@ public class VistaApp {
         contenedor.setPadding(new Insets(5,5,5,5));
         contenedor.setAlignment(Pos.CENTER);
         contenedor.setSpacing(30);
-        contenedor.getChildren().addAll(enviar);
+        contenedor.getChildren().addAll(enviar, capturar);
         
         root.setTop(contenedor);
         
@@ -80,6 +81,13 @@ public class VistaApp {
             Pane treemap = new Graphics().generarRectangulos(tree);
             treemap.setMaxSize(new Graphics().getWIDTH(), new Graphics().getHEIGHT());
             root.setCenter(treemap);
+            
+            capturar.setOnAction((e1)->{
+                capturarYGuardarDisplay();
+                Label exito = new Label("La captura se ha guardado con éxito");
+                root.setBottom(exito);
+            });
+            
         });
         
         
